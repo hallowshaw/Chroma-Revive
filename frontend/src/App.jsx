@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { PuffLoader } from "react-spinners";
+import { ClipLoader } from "react-spinners";
 import "./App.css";
 
 function App() {
@@ -15,6 +15,7 @@ function App() {
     setImage(file);
     setOriginalFileName(file.name);
     setUploading(true);
+
     setTimeout(() => setUploading(false), 1000); // Simulate a delay for loader demonstration
   };
 
@@ -62,14 +63,15 @@ function App() {
 
   return (
     <div className="container">
+      {(loading || uploading) && (
+        <div className="loader-overlay">
+          <ClipLoader color="#f0f0f0" size={60} />
+        </div>
+      )}
       <h1>Image Colorization</h1>
       <div className="file-input">
         <label className="file-label">
-          {uploading ? (
-            <PuffLoader color="#f0f0f0" size={30} />
-          ) : (
-            "Upload Image"
-          )}
+          Upload Image
           <input type="file" onChange={handleUpload} />
         </label>
       </div>
@@ -78,7 +80,7 @@ function App() {
         onClick={handleSubmit}
         disabled={!image || loading}
       >
-        {loading ? <PuffLoader color="#f0f0f0" size={24} /> : "Colorize Image"}
+        Colorize Image
       </button>
 
       {previewImages && (
