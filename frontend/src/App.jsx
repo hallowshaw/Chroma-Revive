@@ -1,15 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "./App.css"; // Ensure you import the updated CSS file
+import "./App.css";
 
 function App() {
   const [image, setImage] = useState(null);
   const [previewImages, setPreviewImages] = useState(null);
   const [loading, setLoading] = useState(false);
+  const [originalFileName, setOriginalFileName] = useState("");
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
     setImage(file);
+    setOriginalFileName(file.name);
   };
 
   const handleSubmit = async () => {
@@ -41,10 +43,14 @@ function App() {
     }
   };
 
-  const handleDownload = (imageData, imageName) => {
+  const handleDownload = (imageData, modelName) => {
+    const fileExtension = originalFileName.split(".").pop();
+    const baseName = originalFileName.replace(`.${fileExtension}`, "");
+    const downloadName = `${baseName}_colorized_${modelName}.${fileExtension}`;
+
     const link = document.createElement("a");
     link.href = `data:image/png;base64,${imageData}`;
-    link.download = imageName;
+    link.download = downloadName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
@@ -76,9 +82,7 @@ function App() {
               />
               <button
                 className="download-button"
-                onClick={() =>
-                  handleDownload(previewImages.eccv16, "eccv16.png")
-                }
+                onClick={() => handleDownload(previewImages.eccv16, "ECCV16")}
               >
                 Download ECCV16
               </button>
@@ -92,7 +96,7 @@ function App() {
               <button
                 className="download-button"
                 onClick={() =>
-                  handleDownload(previewImages.siggraph17, "siggraph17.png")
+                  handleDownload(previewImages.siggraph17, "SIGGRAPH17")
                 }
               >
                 Download SIGGRAPH17
