@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import "./App.css"; // Ensure you import the updated CSS file
 
 function App() {
   const [image, setImage] = useState(null);
@@ -42,7 +43,7 @@ function App() {
 
   const handleDownload = (imageData, imageName) => {
     const link = document.createElement("a");
-    link.href = imageData;
+    link.href = `data:image/png;base64,${imageData}`;
     link.download = imageName;
     document.body.appendChild(link);
     link.click();
@@ -50,66 +51,56 @@ function App() {
   };
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "100vh",
-      }}
-    >
-      <div
-        style={{
-          textAlign: "center",
-          maxWidth: "600px",
-          width: "100%",
-          padding: "0 20px",
-        }}
-      >
-        <h1>Image Colorization</h1>
+    <div className="container">
+      <h1>Image Colorization</h1>
+      <div className="file-input">
         <input type="file" onChange={handleUpload} />
-        <button onClick={handleSubmit} disabled={!image || loading}>
-          {loading ? "Colorizing..." : "Colorize Image"}
-        </button>
+      </div>
+      <button
+        className="submit-button"
+        onClick={handleSubmit}
+        disabled={!image || loading}
+      >
+        {loading ? "Colorizing..." : "Colorize Image"}
+      </button>
 
-        {previewImages && (
-          <div style={{ marginTop: "20px" }}>
-            <h2>Preview</h2>
-            <div style={{ display: "flex", justifyContent: "center" }}>
-              <div style={{ marginRight: "20px" }}>
-                <h3>ECCV16</h3>
-                <img
-                  src={`data:image/png;base64,${previewImages.eccv16}`}
-                  alt="ECCV16"
-                  style={{ maxWidth: "300px", maxHeight: "300px" }}
-                />
-                <button
-                  onClick={() =>
-                    handleDownload(previewImages.eccv16, "eccv16.png")
-                  }
-                >
-                  Download ECCV16
-                </button>
-              </div>
-              <div>
-                <h3>SIGGRAPH17</h3>
-                <img
-                  src={`data:image/png;base64,${previewImages.siggraph17}`}
-                  alt="SIGGRAPH17"
-                  style={{ maxWidth: "300px", maxHeight: "300px" }}
-                />
-                <button
-                  onClick={() =>
-                    handleDownload(previewImages.siggraph17, "siggraph17.png")
-                  }
-                >
-                  Download SIGGRAPH17
-                </button>
-              </div>
+      {previewImages && (
+        <div className="preview-container">
+          <h2>Preview</h2>
+          <div className="image-container">
+            <div className="image-preview">
+              <h3>ECCV16</h3>
+              <img
+                src={`data:image/png;base64,${previewImages.eccv16}`}
+                alt="ECCV16"
+              />
+              <button
+                className="download-button"
+                onClick={() =>
+                  handleDownload(previewImages.eccv16, "eccv16.png")
+                }
+              >
+                Download ECCV16
+              </button>
+            </div>
+            <div className="image-preview">
+              <h3>SIGGRAPH17</h3>
+              <img
+                src={`data:image/png;base64,${previewImages.siggraph17}`}
+                alt="SIGGRAPH17"
+              />
+              <button
+                className="download-button"
+                onClick={() =>
+                  handleDownload(previewImages.siggraph17, "siggraph17.png")
+                }
+              >
+                Download SIGGRAPH17
+              </button>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      )}
     </div>
   );
 }
