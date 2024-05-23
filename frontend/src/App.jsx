@@ -83,7 +83,7 @@ function App() {
           <ClipLoader color="#f0f0f0" size={60} />
         </div>
       )}
-      <h1>Image Colorization</h1>
+      <h1>Chroma Revive</h1>
       <div className="file-input">
         <label className="file-label">
           {previewImages ? "Colorize More?" : "Upload Image"}
