@@ -10,7 +10,7 @@ function App() {
   const [originalFileName, setOriginalFileName] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
-  const [darkMode, setDarkMode] = useState(false); // Added dark mode state
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
