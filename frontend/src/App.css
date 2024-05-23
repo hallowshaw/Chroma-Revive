@@ -142,3 +142,12 @@ h1 {
   align-items: center;
   z-index: 1000;
 }
+
+.uploaded-image {
+  height: 100px; /* Adjust the height as needed */
+  width: auto; /* Let the width adjust to maintain aspect ratio */
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}

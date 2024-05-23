@@ -9,14 +9,20 @@ function App() {
   const [loading, setLoading] = useState(false);
   const [originalFileName, setOriginalFileName] = useState("");
   const [uploading, setUploading] = useState(false);
+  const [uploadMessage, setUploadMessage] = useState("");
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
     setImage(file);
     setOriginalFileName(file.name);
+    setPreviewImages(null); // Reset preview images
     setUploading(true);
+    setUploadMessage("Uploading image... Please wait.");
 
-    setTimeout(() => setUploading(false), 1000); // Simulate a delay for loader demonstration
+    setTimeout(() => {
+      setUploading(false);
+      setUploadMessage("Image uploaded. Ready to colorize.");
+    }, 1000); // Simulate a delay for loader demonstration
   };
 
   const handleSubmit = async () => {
@@ -45,6 +51,7 @@ function App() {
       console.error("Error:", error);
     } finally {
       setLoading(false);
+      setUploadMessage(""); // Remove upload message after colorization
     }
   };
 
@@ -61,6 +68,13 @@ function App() {
     document.body.removeChild(link);
   };
 
+  const handleReset = () => {
+    setImage(null);
+    setPreviewImages(null);
+    setOriginalFileName("");
+    setUploadMessage("");
+  };
+
   return (
     <div className="container">
       {(loading || uploading) && (
@@ -71,17 +85,38 @@ function App() {
       <h1>Image Colorization</h1>
       <div className="file-input">
         <label className="file-label">
-          Upload Image
-          <input type="file" onChange={handleUpload} />
+          {previewImages ? "Colorize More?" : "Upload Image"}
+          <input
+            type="file"
+            onChange={(e) => {
+              handleUpload(e);
+            }}
+          />
         </label>
       </div>
-      <button
-        className="submit-button"
-        onClick={handleSubmit}
-        disabled={!image || loading}
-      >
-        Colorize Image
-      </button>
+      {!previewImages && (
+        <button
+          className="submit-button"
+          onClick={handleSubmit}
+          disabled={!image || loading}
+        >
+          Colorize Image
+        </button>
+      )}
+
+      {image && !loading && !uploading && (
+        <div className="image-preview-container">
+          <h3>Uploaded Image</h3>
+          <img
+            src={URL.createObjectURL(image)}
+            alt="Uploaded"
+            className="uploaded-image"
+          />
+          {uploadMessage && (
+            <div className="upload-message">{uploadMessage}</div>
+          )}
+        </div>
+      )}
 
       {previewImages && (
         <div className="preview-container">
