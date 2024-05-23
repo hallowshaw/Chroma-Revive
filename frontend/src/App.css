@@ -1,7 +1,7 @@
 body {
   background-color: #1e1e1e;
   color: #f0f0f0;
-  font-family: Arial, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {
@@ -16,6 +16,12 @@ body {
 
 h1 {
   margin-top: 20px;
+  color: #f0f0f0;
+}
+
+/* Dark Mode */
+.dark-mode {
+  background-color: #111;
   color: #f0f0f0;
 }
 
@@ -90,14 +96,17 @@ h1 {
 
 .image-preview {
   max-width: 45%;
+  border: 1px solid #555;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: #333;
 }
 
 .image-preview img {
   width: 100%;
   height: auto;
-  border: 1px solid #555;
-  border-radius: 4px;
-  padding: 5px;
+  border-radius: 6px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 

@@ -10,6 +10,7 @@ function App() {
   const [originalFileName, setOriginalFileName] = useState("");
   const [uploading, setUploading] = useState(false);
   const [uploadMessage, setUploadMessage] = useState("");
+  const [darkMode, setDarkMode] = useState(false); // Added dark mode state
 
   const handleUpload = (event) => {
     const file = event.target.files[0];
@@ -76,7 +77,7 @@ function App() {
   };
 
   return (
-    <div className="container">
+    <div className={`container ${darkMode ? "dark-mode" : ""}`}>
       {(loading || uploading) && (
         <div className="loader-overlay">
           <ClipLoader color="#f0f0f0" size={60} />
