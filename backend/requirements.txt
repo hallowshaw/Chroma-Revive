@@ -1,5 +1,0 @@
-Flask==3.0.3
-Flask_Cors==4.0.1
-ipython==8.12.3
-numpy==1.24.1
-torch==2.3.0
